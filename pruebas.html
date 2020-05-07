@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+<script>
+
+// var numero = prompt("Introduce un número entero");
+
+// var resultado = parImpar(numero);
+// alert("El número "+numero+" es "+resultado);
+
+// function parImpar(numero) {
+//   if(numero % 2 == 0) {
+//     return "par";
+//   }
+//   else {
+//     return "impar";
+//   }
+// }
+
+// const car = {
+//     numDoors: 4,
+//     isDirty: true,
+//     color: 'red'
+//   }
+
+//   let text = "";
+//   for (let key in car) {
+//     console.log(car[key]);
+//     // text += car[key] + " ";
+//     // console.log(text);
+//   }
+
+// -Practicas!!
+
+// .- Ejercicio Tarjetas de Credito
+
+// 7.- Si desea desafiarse aún más, puede considerar lo siguiente:
+
+//     Use diferentes números de tarjeta de crédito de un generador de números de tarjeta de crédito y un sitio de validación y pruebe si sus funciones funcionan para todo tipo de tarjetas de crédito.
+//     Para facilitar la prueba de números de tarjetas de crédito, cree una función que acepte una cadena y la convierta en una matriz de números como las matrices proporcionadas inicialmente. (Verifique la pista para una función útil)
+//     Cree una función que convierta números no válidos en números válidos.
+// Pista:Si necesita convertir cadenas en números, parseInt() puede ayudarlo a hacerlo.
+
+
+// All valid credit card numbers
+const valid1 = [4, 5, 3, 9, 6, 7, 7, 9, 0, 8, 0, 1, 6, 8, 0, 8];
+const valid2 = [5, 5, 3, 5, 7, 6, 6, 7, 6, 8, 7, 5, 1, 4, 3, 9];
+const valid3 = [3, 7, 1, 6, 1, 2, 0, 1, 9, 9, 8, 5, 2, 3, 6];
+const valid4 = [6, 0, 1, 1, 1, 4, 4, 3, 4, 0, 6, 8, 2, 9, 0, 5];
+const valid5 = [4, 5, 3, 9, 4, 0, 4, 9, 6, 7, 8, 6, 9, 6, 6, 6];
+
+// All invalid credit card numbers
+const invalid1 = [4, 5, 3, 2, 7, 7, 8, 7, 7, 1, 0, 9, 1, 7, 9, 5];
+const invalid2 = [5, 7, 9, 5, 5, 9, 3, 3, 9, 2, 1, 3, 4, 6, 4, 3];
+const invalid3 = [3, 7, 5, 7, 9, 6, 0, 8, 4, 4, 5, 9, 9, 1, 4];
+const invalid4 = [6, 0, 1, 1, 1, 2, 7, 9, 6, 1, 7, 7, 7, 9, 3, 5];
+const invalid5 = [5, 3, 8, 2, 0, 1, 9, 7, 7, 2, 8, 8, 3, 8, 5, 4];
+
+// Can be either valid or invalid
+const mystery1 = [3, 4, 4, 8, 0, 1, 9, 6, 8, 3, 0, 5, 4, 1, 4];
+const mystery2 = [5, 4, 6, 6, 1, 0, 0, 8, 6, 1, 6, 2, 0, 2, 3, 9];
+const mystery3 = [6, 0, 1, 1, 3, 7, 7, 0, 2, 0, 9, 6, 2, 6, 5, 6, 2, 0, 3];
+const mystery4 = [4, 9, 2, 9, 8, 7, 7, 1, 6, 9, 2, 1, 7, 0, 9, 3];
+const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3];
+
+// An array of all the arrays above
+const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, invalid3, invalid4, invalid5, mystery1, mystery2, mystery3, mystery4, mystery5];
+
+
+
+function validarCred(validar) {
+let total = 0;
+for(let i = validar.length - 1; i >= 0; i--){
+   let number = validar[i];
+   if((validar.length - 1 - i) % 2 === 1) {
+      number *= 2;
+      if (number > 9) {
+        number -= 9;
+      }
+    }
+    total += number;
+}
+
+return total % 10 === 0;
+};
+
+// console.log(validarCred(valid1));
+
+
+//Prueba
+const batch1 = [valid1, invalid2, invalid3, invalid4];
+//Forma larga y que tiene codigo replicado y confuso
+function findInvalidCards(arrayAni) {
+  let total = 0;
+  const arrayInvalid = [];
+
+  for(let i = 0; i < arrayAni.length; i++) {
+    let array = arrayAni[i];
+    for(let j = array.length - 1; j >= 0; j--) {
+      let number = array[j];
+      // console.log(number);
+      if((array.length - 1 - i) % 2 === 1) {
+        number *= 2;
+        if(number > 9) {
+          number -= 9;
+        }
+      }
+      total += number;
+      if(!total % 10 === 0){
+        arrayInvalid.push(array);
+      }
+    }
+  }
+  return arrayInvalid;
+}
+
+// console.log(findInvalidCards(batch1));
+
+
+//Forma corta, limpia y optimizada
+function findInvalidCards2(cards) {
+  const invalid = [];
+
+  for (let i = 0; i < cards.length; i++) {
+    let currCred = cards[i];
+    if (!validarCred(currCred)) {
+    // console.log(array[0]);
+    switch(array) {
+      case 1:
+        if(arrayCompanies.indexOf('Amex') === -1) {
+          arrayCompanies.push('Amex');
+        }
+        break;
+      case 4:
+        if(arrayCompanies.indexOf('Visa') === -1) {
+          arrayCompanies.push('Visa');
+        }
+        break;
+      case 5:
+        if(arrayCompanies.indexOf('Mastercard') === -1) {
+          arrayCompanies.push('Mastercard');
+        }
+        break;
+      default:
+        console.log('Compañia no encontrada');
+    }
+  }
+  return arrayCompanies;
+}
+
+console.log(idInvalidCardCompanies(batch2));
+
+
+//Primer Maraton de Ejercicios y problemas--Varios durante 4 dias (variar hechos de las baeses (3), mas youtube(+10/ver), mas practica(2)), luego seguir con clases.
+
+// .- Ejercicios YouTube (primer bloque)
+// 1) Programa una función que cuente el número de caracteres de una cadena de texto, pe. miFuncion("Hola Mundo") devolverá 10.
+// 2) Programa una función que te devuelva el texto recortado según el número de caracteres indicados, pe. miFuncion("Hola Mundo", 4) devolverá "Hola".
+// 3) Programa una función que dada una String te devuelva un Array de textos separados por cierto caracter, pe. miFuncion('hola que tal', ' ') devolverá ['hola', 'que', 'tal'].
+// 4) Programa una función que repita un texto X veces, pe. miFuncion('Hola Mundo', 3) devolverá Hola Mundo Hola Mundo Hola Mundo.
+
+// 1):
+
+// let cadena = 'AgustinVeliz';
+// cadena = ['AgustinVeliz'];
+// // cadena = {
+// //   nombre: 'Agustin',
+// //   apellido: 'Veliz'
+// // };
+// // cadena = 15;
+
+// function miFuncion(string) {
+
+//    let contar;
+//    if(!string){
+    
+//    }
+//    return contar;
+// };
+
+// console.log(miFuncion(cadena));
+
+// 2):
+
+const cortar = (string1, caracteres) => {
+  let cadena = string1;
+  let resultado;
+
+  if(!typeof cadena === 'string') {
+    console.warn('No ingresaste ninguna cadena');
+  }
+  else if (caracteres === undefined){
+    console.warn('No ingresaste ninguna cadena a cortar');
+  }
+  else {
+    resultado = cadena.slice(0, caracteres);
+  }
+  return resultado;
+}
+
+console.log(cortar("Hola Mundo", 5));
+
+// La forma corta se hace con la expresion implicita sin return y el operador ternario.
+// const cortarTexto = (cadena = "", caracteres = undefined) => {
+//   if(!cadena){
+//     console.warn('No es una cadena de texto');
+//   } else {
+//     console.log((cadena.slice(0, caracteres)));
+//   }
+   
+// }
+
+// 3):
+
+const funcionEntrada = (string, separador) => {
+  let cadena = string;
+  const convertir = cadena.split(separador);
+  return convertir;
+}
+
+console.log(funcionEntrada('Hola que tal', ' '));
+
+// 4):
+
+const funcionRepetidora = (string, n) => {
+  //Se pueden hacer validaciones de 1 sola linea
+  let cadena = string;
+  let repetir = n;
+  for(let i = 0; i < repetir; i++) {
+    console.log(cadena);
+  };
+}
+
+funcionRepetidora('Hola', 3);
+
+
+
+//Ejercicio de Replica:
+// Ejercicios/Proyectos de Funciones 2
+// Calculadora de la deuda del sueño
+// ¿Sabías que las jirafas duermen 4.6 horas al día ? Los humanos necesitamos más que eso. Si no dormimos lo suficiente, acumulamos deudas de sueño. En este proyecto calcularemos si está durmiendo lo suficiente cada semana usando una calculadora de deuda de sueño.
+// El programa determinará las horas de sueño reales e ideales para cada noche de la última semana.
+// Finalmente, calculará, en horas, qué tan lejos está de su meta de sueño semanal.
+
+// const sueñoDiaRealSemana = (dia) => {
+//   switch(dia){
+//     case 'Lunes':
+//      return 8;
+//     break;
+//     case 'Martes':
+//      return 7;
+//     break;
+//     case 'Miercoles':
+//       return 6;
+//     break;
+//     case 'Jueves':
+//       return 8;
+//     break;
+//     case 'Viernes':
+//       return 5;
+//     break;
+//     case 'Sabado':
+//       return 8;
+//     break;
+//     case 'Domingo':
+//       return 7;
+//     break;
+//     default:
+//       return 'Error!';
+//   }
+// };
+
+// const sueñoRealSemana = () => {
+//   const suma = sueñoDiaRealSemana('Lunes') + sueñoDiaRealSemana('Martes') + sueñoDiaRealSemana('Miercoles') +  sueñoDiaRealSemana('Jueves') +  sueñoDiaRealSemana('Viernes') + sueñoDiaRealSemana('Sabado') + sueñoDiaRealSemana('Domingo');
+//   return suma;
+// };
+
+// const sueñoIdealSemana = () => {
+//   let sueñoIdeal = 8;
+//   return sueñoIdeal * 7;
+// };
+
+// const calculandoHorasSueño = () => {
+//   const actualHoras = sueñoRealSemana();
+//   const idealHoras = sueñoIdealSemana();
+
+//   if(actualHoras === idealHoras) {
+//     console.log('El usuario tiene la cantidad ideal de horas de sueño!');
+//   }
+
+//   else if(actualHoras > idealHoras) {
+//     console.log('El usuario durmio mas de lo necesario! ');
+//   }
+
+//   else if(actualHoras < idealHoras) {
+//     console.log('Tenes que Descansar un poco! ' + 'Estas durmiendo: ' + ( idealHoras - actualHoras ) + ' hora(s) menos de lo que deberias.' );
+//   }
+//   else{
+//     console.log('Hubo un Error');
+//   }
+// }
+// console.log(sueñoRealSemana());
+// calculandoHorasSueño();
+
+// console.log(sueñoIdealSemana());
+
+
+
+// .- Ejercicios YouTube (segundo bloque)
+// 5) Programa una función que invierta las palabras de una cadena de texto, pe. miFuncion("Hola Mundo") devolverá "odnuM aloH".
+// 6) Programa una función para contar el número de veces que se repite una palabra en un texto largo, pe. miFuncion("hola mundo adios mundo", "mundo") devolverá 2.
+// 7) Programa una función que valide si una palabra o frase dada, es un palíndromo (que se lee igual en un sentido que en otro), pe. mifuncion("Salas") devolverá true.
+// 8) Programa una función que elimine cierto patrón de caracteres de un texto dado, pe. miFuncion("xyz1, xyz2, xyz3, xyz4 y xyz5", "xyz") devolverá  "1, 2, 3, 4 y 5.
+
+
+//Ejercicio de Replica 2:
+// Piedra, papel o tijera
+// Rock Paper Scissors es un clásico juego de dos jugadores. Cada jugador elige piedra, papel o tijeras. Los artículos se comparan, y el jugador que elija el artículo más poderoso gana.
+
+// Los posibles resultados son:
+
+// - La roca destruye las tijeras.
+// - Tijeras cortadas de papel.
+// - El papel cubre roca.
+// - Si hay un empate, el juego termina en empate.
+// - Nuestro código dividirá el juego en cuatro partes:
+
+// 1.Obtenga la elección del usuario.
+// 2.Obtenga la elección de la computadora.
+// 3.Compare las dos opciones y determine un ganador.
+// 4.Inicie el programa y muestre los resultados.
+
+const eleccionUsuario = (entradaUsuario) => {
+    entradaUsuario = entradaUsuario.toUpperCase();
+
+    if(entradaUsuario === 'piedra' || entradaUsuario === 'papel' || entradaUsuario === 'tijera') {
+      return entradaUsuario;
+    };
+}
+
+const eleccionMaquina = () => {
+  const aleatorio = Math.floor(Math.random() * 3);
+  switch (aleatorio) {
+    case 0:
+      return 'piedra';
+    case 1:
+      return 'papel';
+    case 2:
+      return 'tijera';
+    default:
+      return 'Hubo un error';
+  }
+}
+
+
+
+</script>
+    // <!-- <script src="callbacks.js" ></script> -->
+</body>
+</html>
