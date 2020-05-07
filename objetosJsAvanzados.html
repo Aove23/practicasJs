@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objetos Intermedios/Avanzados</title>
+</head>
+<body>
+    <script>
+
+// Objetos Intermedios:
+
+// //Pasar Objetos por Referencia:
+// const spaceship = {
+//   homePlanet : 'Earth',
+//   color : 'silver'
+// };
+
+// let paintIt = obj => {
+//   obj.color = 'glorious gold'
+// };
+
+// paintIt(spaceship);
+
+// spaceship.color // Returns 'glorious gold'
+
+
+
+// //Recorriendo objetos con for in:
+// let spaceship = {
+//     crew: {
+//     captain: { 
+//         name: 'Lily', 
+//         degree: 'Computer Engineering', 
+//         cheerTeam() { console.log('You got this!') } 
+//         },
+//     'chief officer': { 
+//         name: 'Dan', 
+//         degree: 'Aerospace Engineering', 
+//         agree() { console.log('I agree, captain!') } 
+//         },
+//     medic: { 
+//         name: 'Clementine', 
+//         degree: 'Physics', 
+//         announce() { console.log(`Jets on!`) } },
+//     translator: {
+//         name: 'Shauna', 
+//         degree: 'Conservation Science', 
+//         powerFuel() { console.log('The tank is full!') } 
+//         }
+//     }
+// }; 
+
+// // Write your code below
+// for (let crewMember in spaceship.crew) {
+//   console.log(`${crewMember}: ${spaceship.crew[crewMember].name}`)
+// };
+// for (let crewMember in spaceship.crew) {
+//   console.log(`${spaceship.crew[crewMember].name}: ${spaceship.crew[crewMember].degree}`)
+// };
+
+
+// //Getters:
+
+// const person = {
+//     _firstName: 'John',
+//     _lastName: 'Doe',
+//     get fullName() {
+//       if (this._firstName && this._lastName){
+//         return `${this._firstName} ${this._lastName}`;
+//       } else {
+//         return 'Missing a first name or a last name.';
+//       }
+//     }
+//   }
+
+//   // To call the getter method:
+//   person.fullName; // 'John Doe'
+
+// const curso = {
+//     titulo: "Curso JavaScript",
+//     videos: 19,
+//     _tutor: "Leonid",
+//     get tutor() {
+//         return this._tutor.toUpperCase();
+//     },
+//     set tutor(tutor) {
+//         if(tutor === "" || (typeof tutor === "undefined")) {
+//             return;
+//         };
+//         this._tutor = tutor;
+//     }
+// };
+
+// curso.tutor = "Agustin";
+// console.log(curso.tutor);
+
+
+// // Metodo Setters:
+
+// const robot = {
+//   _model: '1E78V2',
+//   _energyLevel: 100,
+//   _numOfSensors: 15,
+//   get numOfSensors(){
+//     if(typeof this._numOfSensors === 'number'){
+//       return this._numOfSensors;
+//     } else {
+//       return 'Sensors are currently down.'
+//     }
+//   },
+//   set numOfSensors(num){
+//     if(typeof num === 'number' && num >= 0){
+//       this._numOfSensors = num;
+//     } else {
+//       console.log('Pass in a number that is greater than or equal to 0');
+//     }
+//   }
+  
+// };
+
+// robot.numOfSensors = 100;
+// console.log(robot.numOfSensors);
+
+
+// // Funciones de Fabrica
+
+// const robotFactory = (model, mobile) => {
+//   return {
+//     model: model,
+//     mobile: mobile,
+//     beep() {
+//       console.log('Beep Boop');
+//     }
+//   }
+// };
+
+// const tinCan = robotFactory('P-500', true);
+// tinCan.beep();
+// console.log(tinCan.mobile);
+
+
+// //Taquigrafía del valor de la propiedad
+
+// function robotFactory(model, mobile){
+//   return {
+//     model,
+//     mobile,
+//     beep() {
+//       console.log('Beep Boop');
+//     }
+//   }
+// }
+
+// // To check that the property value shorthand technique worked:
+// const newRobot = robotFactory('P-501', false)
+// console.log(newRobot.model)
+// console.log(newRobot.mobile)
+
+//
+
+// Ejercicios/Proyectos de Obejetos 1 (Intermedio)
+// Como comensal frecuente, te encanta probar nuevos restaurantes y experimentar con diferentes comidas. Sin embargo, tener que descubrir qué es lo que quiere pedir puede ser una prueba dura si el menú es grande, y desea una forma más fácil de poder saber qué va a comer.
+// En este proyecto, usará JavaScript para crear aleatoriamente una comida de tres platos basada en lo que está disponible en un menú. ¡Seguiremos ejecutándolo hasta que estemos satisfechos con la comida generada!
+
+// Resolucion: Falta revisar!
+const menu = {
+    _courses: {
+      appetizers: [],
+      mains: [],
+      desserts: [],
+    },
+    get appetizers() {
+      return this._courses.appetizers;
+    },
+    get mains() {
+      return this._courses.mains;
+    },
+    get desserts() {
+      return this._courses.desserts;
+    },
+    set appetizers(appetizers) {
+      this._courses.appetizers = appetizers;
+    },
+    set mains(mains) {
+      this._courses.mains = mains;
+    },
+    set desserts(desserts) {
+      this._courses.desserts = desserts;
+    },
+    get courses() {
+      return {
+        appetizers: this.appetizers,
+        mains: this.mains,
+        desserts: this.desserts,
+      };
+    },
+    addDishToCourse(courseName, dishName, dishPrice) {
+      const dish = {
+        name: dishName,
+        price: dishPrice,
+      };
+     return this._courses[courseName].push(dish);
+  
+    },
+    getRandomDishFromCourse(courseName) {
+      const dishes = this._courses[courseName];
+      const randomIndex = Math.floor(Math.random() * dishes.length);
+      return dishes[randomIndex];
+    },
+    generateRandomMeal() {
+      const appetizer = this.getRandomDishFromCourse('appetizers');
+      const main = this.getRandomDishFromCourse('main');
+      const dessert = this.getRandomDishFromCourse('dessert');
+      const totalPrice = appetizer.price + main.price + dessert.price;
+      return `Your meal is ${appelizer.name}, ${main.name}, and the total price is ${totalPrice}`;
+    }
+   
+  };
+  
+  menu.addDishToCourse('appetizers', 'Caesar Salad', 4.25);
+  menu.addDishToCourse('appetizers', 'wings', 4.50);
+  menu.addDishToCourse('appetizers', 'fries', 4.89);
+  
+  menu.addDishToCourse('mains', 'steak', 10.25);
+  menu.addDishToCourse('mains', 'salmon', 7.75);
+  menu.addDishToCourse('mains', 'tofu', 11.20);
+  
+  menu.addDishToCourse('desserts', 'ice cream', 3.00);
+  menu.addDishToCourse('desserts', 'coffe', 3.50);
+  menu.addDishToCourse('desserts', 'coke', 3.25);
+  
+  const meal = menu.generateRandomMeal();
+  console.log(meal);
+
+
+//Pasando y entendiendo el problema
+menu = {
+  _platos: {
+    entrada: [],
+    principal: [],
+    postre: [],
+  },
+  get entrada() {
+    return this._platos.entrada;
+  },
+  get principal() {
+    return console.log(this._platos.principal);
+  },
+  get postre(){
+    return this._platos.postre;
+  },
+  set entrada(entrada) {
+    this._platos.entrada = entrada;
+  },
+  set principal(principal) {
+    this._platos.principal = principal;
+  },
+  set postre(postre) {
+    this._platos.postre = postre;
+  },
+  get platos() {
+    return {
+      entrada: this.entrada,
+      principal: this.principal,
+      postre: this.postre,
+    };
+  },
+  agregarPlatos(nombrePlatos, comidaNombre, comidaPrecio) {
+    const comida = {
+      name: comidaNombre,
+      precio: comidaPrecio,
+    };
+    return this._platos[nombrePlatos].push(comida);
+  },
+  obtenerRandomComidaPlatos(nombrePlatos) {
+    const comidas = this._platos[nombrePlatos];
+    const randomIndex = Math.floor(Math.random() * comidas.length);
+    return comidas[randomIndex];
+  },
+  generarComidaRandom() {
+    const entrada = this.obtenerRandomComidaPlatos('entrada');
+    const principal = this.obtenerRandomComidaPlatos('principal');
+    const postre = this.obtenerRandomComidaPlatos('postre');
+    const totalPrecio = entrada.precio + principal.precio + postre.precio;
+    return `Su comida es ${entrada.nombre}, ${principal.nombre}, y su precio total es ${totalPrecio}`;
+  }
+
+}
+
+menu.agregarPlatos('entrada', 'ensalada', 25);
+menu.agregarPlatos('principal', 'ensalada', 25);
+menu.agregarPlatos('postre', 'ensalada', 25);
+
+
+const comida = menu.generarComidaRandom();
+console.log(comida);
+  
+
+
+//Clase con Leo
+menu = {
+  // propieddades
+  nombreSucursal : "Peru",
+  _platos: {
+    entrada: [1,1,1],
+    principal: [{nombre:"asado",precio:123},3,4,1],
+    postre: [1,3,1]
+  },
+  // metodo
+  // donde arg1 = a uno de los patos de a modificar
+  // donde arg2 = el valor para el argumento 1
+  modilatos(arg1,arg2){
+    // this._platos.arg1 = arg2;
+    return (this._platos[arg1] = arg2);
+  },
+  op(propiedadObt) {
+    return this._platos[propiedadObt];
+  },
+  obtenerAllPlatos(){
+    return this._platos;
+  },  
+  // obtenerPlatoAleatorio(){
+  //   const temp = [this.op("entrada"),this.op("principal"),this.op("postre")];
+
+  //   return temp[Math.floor(Math.random() * temp.length)];
+  // },
+  ejericioAgus(){
+    return {
+      plato1:this.op("entrada")[Math.floor(Math.random() * this.op("entrada").length)],
+      plato2:this.op("principal")[Math.floor(Math.random() * this.op("principal").length)],
+      plato3:this.op("postre")[Math.floor(Math.random() * this.op("postre").length)]
+    }
+  }
+  // get entrada() {
+  //   return console.log(this._platos.entrada);
+  // },
+  // get principal() {
+  //   return console.log(this._platos.principal);
+  // },
+  // get postre(){
+  //   return this._platos.postre;
+  // },
+  // set entrada(entrada) {
+  //   this._platos.entrada = entrada;
+  // },
+  // set principal(principal) {
+  //   this._platos.principal = principal;
+  // },
+  // set postre(postre) {
+  //   this._platos.postre = postre;
+  // },
+  // get platos() {
+  //   return {
+  //     entrada: this.entrada,
+  //     principal: this.principal,
+  //     postre: this.postre,
+  //   };
+  // },
+  // agregarPlatos(nombrePlatos, comidaNombre, comidaPrecio) {
+  //   const comida = {
+  //     name: comidaNombre,
+  //     precio: comidaPrecio,
+  //   };
+  //   return this._platos[nombrePlatos].push(comida);
+  // },
+  // obtenerRandomComidaPlatos(nombrePlatos) {
+  //   const comidas = this._platos[nombrePlatos];
+  //   const randomIndex = Math.floor(Math.random() * comidas.length);
+  //   return comidas[randomIndex];
+  // },
+  // generarComidaRandom() {
+  //   const entrada = this.obtenerRandomComidaPlatos('entrada');
+  //   const principal = this.obtenerRandomComidaPlatos('principal');
+  //   const postre = this.obtenerRandomComidaPlatos('postre');
+  //   const totalPrecio = entrada.precio + principal.precio + postre.precio;
+  //   return `Su comida es ${entrada.nombre}, ${principal.nombre}, y su precio total es ${totalPrecio}`;
+  // }
+
+};
+
+
+
+// Ejercicios/Proyectos de Obejetos 2 (Intermedio)
+
+// Estadísticas del equipo
+
+// Queremos crear y extraer información sobre su equipo deportivo favorito. Baloncesto, fútbol, ​​tenis o waterpolo, lo eliges. Es su trabajo crear datos utilizando las estructuras de datos JavaScript a su disposición: matrices, objetos, etc.
+// Una vez creado, puede manipular estas estructuras de datos, así como obtener información de ellos. Por ejemplo, es posible que desee obtener el número total de juegos que ha jugado su equipo, o el puntaje promedio de todos sus juegos.
+
+//Resolucion: 
+const team = {
+    _players: [
+      {
+    firstName: 'Pablo',
+    lastName: 'Sanchez',
+    age: 11
+      },
+      {
+    firstName: 'Agustin',
+    lastName: 'Veliz',
+    age: 24
+      },
+      {
+    firstName: 'Leonid',
+    lastName: 'ChancC',
+    age: 22
+      }
+    ],
+    _games: [
+      {
+    opponent: 'Broncos',
+    teamPoints: 42,
+    opponentPoints: 27
+      },
+      {
+    opponent: 'Futbol',
+    teamPoints: 3,
+    opponentPoints: 1
+      },
+      {
+    opponent: 'Basquet',
+    teamPoints: 80,
+    opponentPoints: 73
+      }
+    ],
+    get games() {
+      return this._games;
+    },
+    get players() {
+      return this._players;
+    },
+    addPlayers(firstName, lastName, age) {
+      let player = { 
+      firstName: firstName,
+      lastName: lastName,
+      age: age
+      };
+  
+      this.players.push(player);
+    },
+    addGame(oppName, points, oppPoints) {
+      const game =  {
+        oppName,
+        points,
+        oppPoints
+      };
+  
+      this.games.push(game);
+    }
+  };
+  
+  team.addPlayers("Steph", "Curry", 28);
+  team.addPlayers("Lisa", "Leslie", 44);
+  team.addPlayers("Bugs", "Bunny", 76);
+  console.log(team.players);
+  
+  team.addGame('Titans', 100, 98);
+  console.log(team.games);
+
+
+    </script>
+</body>
+</html>
